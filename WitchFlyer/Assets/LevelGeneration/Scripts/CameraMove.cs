@@ -8,19 +8,29 @@ public class CameraMove : MonoBehaviour
     [Header("Scrolling")]
     public float scrollSpeed = 0.1f; // horizontal auto-scroll speed, adjust as needed
 
-    [Header("Push Collider")]
-    public BoxCollider2D pushCollider; // the collider that pushes the, has to be a child object, see LEVELGENEXAMPLE SCENE
-    public float colliderThickness = 0.5f; // how thick the left wall is, 0.5 usually stops things from escaping
+    [Header("Wall Colliders")]
+    public BoxCollider2D leftWall;
+    public BoxCollider2D rightWall;
+    public BoxCollider2D topWall;
+    public BoxCollider2D bottomWall;
+    public BoxCollider2D killWall;
+    
+
+    [Header("Wall Settings")]
+    public float wallThickness = 0.5f;
+    public float verticalPadding = 2f;
+    public float horizontalPadding = 1f;
+    
     private Camera cam;
 
     void Start()
     {
         cam = GetComponent<Camera>();
 
-        if (pushCollider == null)
+        if (!leftWall || !rightWall || !topWall || !bottomWall)
         {
-            Debug.LogError("Assign a BoxCollider2D as the pushCollider. Do so as a child, see example");
-            return;
+            Debug.LogError("Assign all four wall colliders.");
+            enabled = false;
         }
     }
 
@@ -30,25 +40,86 @@ public class CameraMove : MonoBehaviour
         transform.position -= Vector3.right * -scrollSpeed * Time.deltaTime;
 
         // position collider at left edge of screen
-        PositionPushCollider();
+        PositionPushColliders();
+
+        IgnoreEnemiesWithRightWall();
     }
 
-    void PositionPushCollider()
+    void PositionPushColliders()
     {
-        // lamera height in world units
-        float camHeight = 2f * cam.orthographicSize;
+       float camHeight = 2f * cam.orthographicSize;
         float camWidth = camHeight * cam.aspect;
 
-        // Left edge of visible screen in world space
-        float leftEdgeX = transform.position.x - (camWidth / 2f);
+        float leftX   = transform.position.x - camWidth / 2f;
+        float rightX  = transform.position.x + camWidth / 2f;
+        float topY    = transform.position.y + camHeight / 2f;
+        float bottomY = transform.position.y - camHeight / 2f;
 
-        // position collider at left edge
-        Vector3 colPos = pushCollider.transform.position;
-        colPos.x = leftEdgeX + (colliderThickness / 2f);
-        colPos.y = transform.position.y; // match camera center vertically
-        pushCollider.transform.position = colPos;
+        // LEFT WALL
+        leftWall.transform.position = new Vector3(
+            leftX - horizontalPadding + wallThickness / 2f,
+            transform.position.y,
+            0f
+        );
+        leftWall.size = new Vector2(
+            wallThickness,
+            camHeight + verticalPadding
+        );
 
-        // resize collider to match camera height
-        pushCollider.size = new Vector2(colliderThickness, camHeight);
+        // KILL WALL
+        killWall.transform.position = new Vector3(
+            leftX - horizontalPadding + wallThickness / 2f,
+            transform.position.y,
+            0f
+        );
+        killWall.size = new Vector2(
+            wallThickness,
+            camHeight + verticalPadding
+        );
+
+        // RIGHT WALL
+        rightWall.transform.position = new Vector3(
+            rightX + horizontalPadding - wallThickness / 2f,
+            transform.position.y,
+            0f
+        );
+        rightWall.size = new Vector2(
+            wallThickness,
+            camHeight + verticalPadding
+        );
+
+        // TOP WALL
+        topWall.transform.position = new Vector3(
+            transform.position.x,
+            topY + verticalPadding / 2f,
+            0f
+        );
+        topWall.size = new Vector2(
+            camWidth + horizontalPadding,
+            wallThickness
+        );
+
+        // BOTTOM WALL
+        bottomWall.transform.position = new Vector3(
+            transform.position.x,
+            bottomY - verticalPadding / 2f,
+            0f
+        );
+        bottomWall.size = new Vector2(
+            camWidth + horizontalPadding,
+            wallThickness
+        );
     }
+
+    void IgnoreEnemiesWithRightWall()
+{
+    GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+    foreach (var enemy in allEnemies)
+    {
+        Collider2D enemyCol = enemy.GetComponent<Collider2D>();
+        if (enemyCol != null)
+            Physics2D.IgnoreCollision(rightWall, enemyCol, true);
+    }
+}
 }
