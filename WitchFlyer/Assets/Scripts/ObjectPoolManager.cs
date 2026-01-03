@@ -244,6 +244,11 @@ public class ObjectPoolManager : MonoBehaviour
         }
         else
         {
+            if (!_objectPools.ContainsKey(obj))
+            {
+                CreatePool(obj, obj.transform.position, obj.transform.rotation, poolType);
+            }
+            ReturnObjectToPool(obj, poolType);
             Debug.LogWarning("Trying to return object that is not pooled: " + obj.name);
         }
     }
