@@ -118,7 +118,7 @@ public class SoundManager : MonoBehaviour
             case nameof(SceneEnum.MainMenu):
                 StartCoroutine(SetMusic(mainMenuMusic));
                 break;
-            case nameof(SceneEnum.Game):
+            case nameof(SceneEnum.GameScene):
                 StartCoroutine(SetMusic(inGameMusic));
                 break;
         }

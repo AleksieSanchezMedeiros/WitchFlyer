@@ -14,7 +14,17 @@ public class PlayerShooting : MonoBehaviour
 {
     [SerializeField] private GameObject bullet;
     [SerializeField] private GameObject spawnPoint;
+    [Header("Water Element")]
+    [SerializeField] private GameObject hailProjectilePrefab;
+    [SerializeField] private float hailFireRate = 0.5f;
+    private float nextFireTime;
 
+    [Header("Lightning Element")]
+    [SerializeField] private GameObject lightningPrefab;
+    [SerializeField] private float lightningCooldown;
+    [SerializeField] private float chargeLimit;
+
+    [Header("Element Selection")]
     public ElementList currentElement;
     public ElementList leftElement;
     public ElementList rightElement;
@@ -32,27 +42,46 @@ public class PlayerShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (InputManager.shootPressed && canShoot)
-        {
-            // GameObject bulletInstacne = Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation);
-            GameObject bulletInstance = ObjectPoolManager.SpawnObject(bullet, spawnPoint.transform.position,spawnPoint.transform.rotation, ObjectPoolManager.PoolType.GameObjects);
-            StartCoroutine(ShootCooldown());
-        }
+        HandleElementSwitch();
 
-        if (InputManager.elementSwitchLeftPressed)
-        {
-            ElementList nextElement = leftElement;
-            leftElement = currentElement;
-            currentElement = nextElement;
-        }
+        if (InputManager.shootPressed && canShoot) {
 
-        if (InputManager.elementSwitchRightPressed)
-        {
-            ElementList nextElement = rightElement;
-            rightElement = currentElement;
-            currentElement = nextElement;
+            switch (currentElement) {
+                case ElementList.Fire:
+                    //FireAttack();
+                    break;
+                case ElementList.Water:
+                    StartCoroutine(ShootCooldown());
+                    //IceAttack();
+                    break;
+                case ElementList.Lightning:
+                    //LightningAttack();
+                    break;
+            }
         }
     }
+
+    private void HandleElementSwitch()
+    {
+        if (InputManager.elementSwitchLeftPressed) {
+            currentElement = GetLeft(currentElement);
+        }
+
+        if (InputManager.elementSwitchRightPressed) {
+            currentElement = GetRight(currentElement);
+        }
+    }
+
+
+    private ElementList GetLeft(ElementList current) =>
+        current == ElementList.Fire ? ElementList.Water :
+        current == ElementList.Water ? ElementList.Lightning :
+        ElementList.Fire;
+
+    private ElementList GetRight(ElementList current) =>
+        current == ElementList.Fire ? ElementList.Lightning :
+        current == ElementList.Water ? ElementList.Fire :
+        ElementList.Water;
 
     private IEnumerator ShootCooldown()
     {

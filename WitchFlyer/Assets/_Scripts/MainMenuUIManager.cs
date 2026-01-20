@@ -35,7 +35,7 @@ public class MainMenuUIManager : MonoBehaviour
         noQuitButton.onClick.AddListener(OnNoQuitButtonClick);
     }
 
-    private void OnPlayButtonClick() =>  MySceneManager.Instance.SwitchScene(SceneEnum.Game, true);
+    private void OnPlayButtonClick() =>  MySceneManager.Instance.SwitchScene(SceneEnum.GameScene, true);
     
     public void OnGuideButtonClick() => guidePanel.SetActive(!guidePanel.activeSelf);
     public void CloseGuidePanel() => guidePanel.SetActive(false);

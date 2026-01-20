@@ -21,7 +21,6 @@ public class MySceneManager : MonoBehaviour
     [SerializeField] private KeyCode restartKey = KeyCode.P;
 
     public SceneEnum currentScene = SceneEnum.MainMenu;
-    public GameState gameState = GameState.Play;
 
     private void Awake()
     {
@@ -34,9 +33,18 @@ public class MySceneManager : MonoBehaviour
         }
     }
 
+    private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
+    private void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
+
     private void Update()
     {
         HandleSceneInput();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "GameScene")
+            GameManager.Instance.SetState(GameState.Playing);
     }
 
     /// <summary>
@@ -56,8 +64,6 @@ public class MySceneManager : MonoBehaviour
 
     private IEnumerator LoadSceneWithLoadingScreen(SceneEnum scene)
     {
-        Time.timeScale = 0;
-        gameState = GameState.Pause;
         loadingScreen.SetActive(true);
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene.ToString());
@@ -68,8 +74,6 @@ public class MySceneManager : MonoBehaviour
         }
 
         loadingScreen.SetActive(false);
-        Time.timeScale = 1;
-        gameState = GameState.Play;
     }
 
     public void RestartScene()
@@ -80,26 +84,21 @@ public class MySceneManager : MonoBehaviour
     public void PauseGameToggle()
     {
         if (SceneManager.GetActiveScene().name != "GameScene") return;
-
-        if (isPaused) {
-            UnpauseGame();
-        } else {
-            PauseGame();
-        }
+        GameManager.Instance.TogglePause();
     }
 
-    public void PauseGame()
+    private void HandleSceneInput()
     {
-        Time.timeScale = 0;
-        isPaused = true;
-        gameState = GameState.Pause;
+        var kb = Keyboard.current;
+        if (kb == null) return;
+
+        if (kb.pKey.wasPressedThisFrame) RestartScene();
+        // if (kb.pKey.wasPressedThisFrame || kb.escapeKey.wasPressedThisFrame) PauseGameToggle();
     }
 
-    public void UnpauseGame()
+    public bool LoadingScreenIsNotActive()
     {
-        Time.timeScale = 1;
-        isPaused = false;
-        gameState = GameState.Play;
+        return !loadingScreen.activeSelf;
     }
 
     public void QuitGame()
@@ -111,30 +110,10 @@ public class MySceneManager : MonoBehaviour
         Application.Quit();
 #endif
     }
-
-    private void HandleSceneInput()
-    {
-        var kb = Keyboard.current;
-        if (kb == null) return;
-
-        if (kb.pKey.wasPressedThisFrame) RestartScene();
-        if (kb.pKey.wasPressedThisFrame || kb.escapeKey.wasPressedThisFrame) PauseGameToggle();
-    }
-
-    public bool LoadingScreenIsNotActive()
-    {
-        return !loadingScreen.activeSelf;
-    }
 }
 
 public enum SceneEnum
 {
     MainMenu,
-    Game
-}
-
-public enum GameState
-{
-    Play,
-    Pause
+    GameScene
 }
