@@ -15,6 +15,7 @@ public class InputManager : MonoBehaviour
     public static bool powerUpPressed;
     public static bool shootPressed;
     public static bool shootHeld;
+    public static bool shootReleased;
     public static bool elementSwitchLeftPressed;
     public static bool elementSwitchRightPressed;
 
@@ -35,6 +36,7 @@ public class InputManager : MonoBehaviour
         powerUpPressed = powerUpAction.WasPressedThisFrame();
         shootPressed = shootAction.WasPressedThisFrame();
         shootHeld = shootAction.IsPressed();
+        shootReleased = shootAction.WasReleasedThisFrame();
         elementSwitchLeftPressed = elementSwitchLeftAction.WasPressedThisFrame();
         elementSwitchRightPressed = elementSwitchRightAction.WasPressedThisFrame();
     }

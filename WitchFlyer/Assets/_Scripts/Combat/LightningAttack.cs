@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LightningAttack : MonoBehaviour
+public class LightningAttack : MonoBehaviour, IElementAttack
 {
     [SerializeField] private Transform origin;
     [SerializeField] private float minCharge = 0.1f;
@@ -17,12 +17,21 @@ public class LightningAttack : MonoBehaviour
 
     public void OnPressed()
     {
+        Debug.Log("LIGHTNING PRESS");
         charging = true;
         chargeTime = 0f;
     }
 
+    public void OnHeld(float dt)
+    {
+        if (!charging) return;
+        chargeTime += dt;
+        chargeTime = Mathf.Min(chargeTime, maxCharge);
+    }
+
     public void OnReleased()
     {
+        Debug.Log("LIGHTNING RELEASE");
         if (!charging) return;
         charging = false;
 

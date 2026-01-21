@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
@@ -14,11 +15,13 @@ public class PlayerShooting : MonoBehaviour
     [Header("Element Selection")]
     public ElementList currentElement;
 
-    private bool lastHeld;
+    [Header("UI")]
+    [SerializeField] private TMP_Text elementDisplay;
 
     private void Awake()
     {
         currentElement = ElementList.Fire;
+        EquipElement(currentElement); // equip fire element by default; REMOVE for prototype
     }
 
     // Update is called once per frame
@@ -26,9 +29,9 @@ public class PlayerShooting : MonoBehaviour
     {
         HandleElementSwitch();
 
-        bool held = InputManager.shootPressed;
-        bool pressed = held && !lastHeld;
-        bool released = !held && lastHeld;
+        bool held = InputManager.shootHeld;
+        bool pressed = InputManager.shootPressed;
+        bool released = InputManager.shootReleased;
 
         if (pressed) currentAttack?.OnPressed();
         if (held) currentAttack?.OnHeld(Time.deltaTime);
@@ -61,6 +64,7 @@ public class PlayerShooting : MonoBehaviour
         };
 
         currentAttack?.OnEquipped();
+        UpdateElementDisplay();
     }
 
     private ElementList GetLeft(ElementList current) =>
@@ -72,6 +76,11 @@ public class PlayerShooting : MonoBehaviour
         current == ElementList.Fire ? ElementList.Lightning :
         current == ElementList.Water ? ElementList.Fire :
         ElementList.Water;
+
+    private void UpdateElementDisplay()
+    {
+        elementDisplay.text = "<color=yellow>Element:</color> " + currentElement.ToString();
+    }
 }
 
 public enum ElementList

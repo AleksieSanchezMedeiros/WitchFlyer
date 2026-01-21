@@ -9,7 +9,6 @@ public abstract class Enemy : MonoBehaviour
 
     void Update()
     {
-        CheckHealth();
         Move();
         Attack();
     }
@@ -25,6 +24,7 @@ public abstract class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         HP -= damage;
+        if (HP <= 0) CheckHealth();
     }
 
     //make move and attack be methods that classes that derive from this one have to implement

@@ -10,6 +10,7 @@ public class WaterAttack : MonoBehaviour, IElementAttack
 
     public void OnPressed()
     {
+        Debug.Log("WATER PRESS");
         if (Time.time < nextFireTime) return;
         nextFireTime = Time.time + fireRate;
 

@@ -36,20 +36,20 @@ public class HailProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        HandleImpact(other.gameObject);
+        if (other.gameObject.tag == "Enemy")
+            HandleImpact(other.gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        HandleImpact(collision.gameObject);
+        if (collision.gameObject.tag == "Enemy")
+            HandleImpact(collision.gameObject);
     }
 
     private void HandleImpact(GameObject hitObject)
     {
         DealDamage(hitObject, directHitDamage);
-
         Explode();
-
         ReturnToPool();
     }
 
@@ -71,7 +71,6 @@ public class HailProjectile : MonoBehaviour
             }
         }
     }
-
 
     private void DealDamage(GameObject target, int amount)
     {
