@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 3
   tags:
   - Enemy
+  - Settings
+  - Sliders
+  - Audio Toggles
+  - Ground
+  - KillWall
   layers:
   - Default
   - TransparentFX

@@ -38,11 +38,17 @@ public class HailProjectile : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy")
             HandleImpact(other.gameObject);
+
+        if (other.gameObject.tag == "Ground")
+            HandleImpact(other.gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Enemy")
+            HandleImpact(collision.gameObject);
+
+        if (collision.gameObject.tag == "Ground")
             HandleImpact(collision.gameObject);
     }
 
@@ -81,7 +87,7 @@ public class HailProjectile : MonoBehaviour
     private void ReturnToPool()
     {
         // Return to pool appropriately
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
 //#if UNITY_EDITOR

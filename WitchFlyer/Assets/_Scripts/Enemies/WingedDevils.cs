@@ -56,7 +56,7 @@ public class WingedDevils : Enemy
     // Camera collider handles despawn
     private void OnTriggerEnter2D(Collider2D other)
     {   
-        if (other.CompareTag("MainCamera"))
+        if (other.CompareTag("KillWall"))
         {
             Destroy(gameObject);
         }

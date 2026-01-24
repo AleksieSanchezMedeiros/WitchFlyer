@@ -40,8 +40,7 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        GameObject.Destroy(gameObject);
-        Debug.Log("GAME OVER!");
+        Destroy(gameObject);
         GameManager.Instance.GameOver();
     }
 
@@ -53,14 +52,16 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy")) {
-            TakeDamage(1);
+            int damage = collision.gameObject.GetComponent<Enemy>().dmg;
+            TakeDamage(damage);
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Enemy") {
-            TakeDamage(1);
+            int damage = collision.gameObject.GetComponent<Enemy>().dmg;
+            TakeDamage(damage);
         }
     }
 }

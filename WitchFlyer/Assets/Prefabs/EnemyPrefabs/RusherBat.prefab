@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RusherBat
   HP: 3
-  dmg: 2
+  dmg: 5
   type: Fire
   rushSpeed: 16
   bounceForce: 5

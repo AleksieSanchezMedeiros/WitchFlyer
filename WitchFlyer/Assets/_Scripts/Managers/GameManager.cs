@@ -5,6 +5,7 @@ using UnityEngine;
 
 public enum GameState
 {
+    None,
     Playing,
     Paused,
     GameOver
@@ -15,7 +16,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public GameState state { get; private set; } = GameState.Playing;
 
-    public event Action<GameState, GameState> OnStateChanged;
+    public static Action<GameState, GameState> OnStateChanged;
 
     private void Awake()
     {
@@ -25,12 +26,14 @@ public class GameManager : MonoBehaviour
         //if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         //Instance = this;
         //DontDestroyOnLoad(gameObject);
+
+        SetState(GameState.None);
     }
 
     private void Start()
     {
         // Add anything in here while its still 
-        SetState(GameState.Playing);
+        //SetState(GameState.Playing);
     }
 
     public void SetState(GameState newState)
@@ -39,19 +42,24 @@ public class GameManager : MonoBehaviour
 
         GameState oldState = state;
         state = newState;
-
+        Debug.Log("STATE UPDATE!");
         switch (state) {
             case GameState.Playing:
+                Debug.Log("PLAYING STATE");
                 Time.timeScale = 1f;
                 break;
             case GameState.Paused:
+                Debug.Log("PAUSED STATE");
                 Time.timeScale = 0f;
                 break;
             case GameState.GameOver:
+                Debug.Log("SWITCH GAME OVER!");
                 Time.timeScale = 0f;
                 break;
+            default:
+                break;
         }
-
+        Debug.Log("WHERE");
         OnStateChanged?.Invoke(oldState, newState);
     }
 
@@ -64,6 +72,16 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         SetState(GameState.GameOver);
+    }
+
+    public void Restart()
+    {
+        MySceneManager.Instance.RestartScene();
+    }
+
+    public void ReturnToMenu()
+    {
+        MySceneManager.Instance.SwitchScene(SceneEnum.MainMenu);
     }
 
     public bool IsPlaying => state == GameState.Playing; 

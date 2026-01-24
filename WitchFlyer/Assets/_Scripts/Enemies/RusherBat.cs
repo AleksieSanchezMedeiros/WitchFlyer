@@ -89,35 +89,42 @@ public class RusherBat : Enemy
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
-{
-    // HIT PLAYER
-    if (isAttacking && collision.gameObject.CompareTag("Player"))
     {
-        // DEAL DAMAGE HERE
-        /*
-        PlayerHealth ph = collision.gameObject.GetComponent<PlayerHealth>();
-        if (ph) ph.TakeDamage(dmg);
-        */
+        // HIT PLAYER
+        if (isAttacking && collision.gameObject.CompareTag("Player"))
+        {
+            // DEAL DAMAGE HERE
+            /*
+            PlayerHealth ph = collision.gameObject.GetComponent<PlayerHealth>();
+            if (ph) ph.TakeDamage(dmg);
+            */
 
-        // bounce backwards (opposite of rush direction)
-        Vector2 bounceDir = -rb.linearVelocity.normalized;
+            // bounce backwards (opposite of rush direction)
+            Vector2 bounceDir = -rb.linearVelocity.normalized;
         
-        rb.linearVelocity = Vector2.zero;
-        rb.AddForce(bounceDir * bounceForce, ForceMode2D.Impulse);
+            rb.linearVelocity = Vector2.zero;
+            rb.AddForce(bounceDir * bounceForce, ForceMode2D.Impulse);
 
-        StopAllCoroutines();
-        StartCoroutine(StunRoutine());
-        return;
+            StopAllCoroutines();
+            StartCoroutine(StunRoutine());
+            return;
+        }
+
+        // HIT CAMERA BOUNDARY (missed attack)
+        if (isAttacking && collision.gameObject.CompareTag("MainCamera"))
+        {
+            // stop immediately
+            rb.linearVelocity = Vector2.zero;
+
+            StopAllCoroutines();
+            StartCoroutine(StunRoutine());
+        }
     }
 
-    // HIT CAMERA BOUNDARY (missed attack)
-    if (isAttacking && collision.gameObject.CompareTag("MainCamera"))
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        // stop immediately
-        rb.linearVelocity = Vector2.zero;
-
-        StopAllCoroutines();
-        StartCoroutine(StunRoutine());
+        if (other.CompareTag("KillWall")) {
+            Destroy(gameObject);
+        }
     }
-}
 }
