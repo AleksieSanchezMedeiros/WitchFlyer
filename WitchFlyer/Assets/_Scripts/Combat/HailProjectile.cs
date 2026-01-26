@@ -10,6 +10,7 @@ public class HailProjectile : MonoBehaviour
     [Header("Damage")]
     [SerializeField] private int directHitDamage = 2;
     [SerializeField] private int shardDamage = 1;
+    [SerializeField] private Element attackElement = Element.Water;
 
     [Header("Explosion Visuals (optional)")]
     [SerializeField] private bool spawnShards = false;
@@ -81,7 +82,15 @@ public class HailProjectile : MonoBehaviour
     private void DealDamage(GameObject target, int amount)
     {
         if (amount <= 0) return;
-        target.SendMessage("TakeDamage", amount, SendMessageOptions.DontRequireReceiver);
+
+        // Using send message can cause some issue later on
+        // target.SendMessage("TakeDamage", amount + bonusDamage, SendMessageOptions.DontRequireReceiver);
+
+        Enemy enemy = target.GetComponentInParent<Enemy>();
+        if (enemy != null) {
+            int bonusDamage = Player.Instance.GetSongBonus(attackElement);
+            enemy.TakeDamage(directHitDamage + bonusDamage);
+        }
     }
 
     private void ReturnToPool()

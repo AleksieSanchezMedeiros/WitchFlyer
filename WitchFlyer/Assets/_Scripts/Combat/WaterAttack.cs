@@ -5,6 +5,7 @@ public class WaterAttack : MonoBehaviour, IElementAttack
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private GameObject hailPrefab;
     [SerializeField] private float fireRate = 0.25f;
+    [SerializeField] private int manaCost;
 
     private float nextFireTime;
 
@@ -14,7 +15,8 @@ public class WaterAttack : MonoBehaviour, IElementAttack
         if (Time.time < nextFireTime) return;
         nextFireTime = Time.time + fireRate;
 
-        Instantiate(hailPrefab, spawnPoint.position, spawnPoint.rotation);
+        bool enoughMana = Player.Instance.UseMana(manaCost);
+        if (enoughMana) Instantiate(hailPrefab, spawnPoint.position, spawnPoint.rotation);
     }
 
     public void OnHeld(float dt) { }

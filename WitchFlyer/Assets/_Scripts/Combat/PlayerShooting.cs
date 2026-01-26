@@ -13,14 +13,14 @@ public class PlayerShooting : MonoBehaviour
     private IElementAttack currentAttack;
 
     [Header("Element Selection")]
-    public ElementList currentElement;
+    public Element currentElement;
 
     [Header("UI")]
     [SerializeField] private TMP_Text elementDisplay;
 
     private void Awake()
     {
-        currentElement = ElementList.Fire;
+        currentElement = Element.Fire;
         EquipElement(currentElement); // equip fire element by default; REMOVE for prototype
     }
 
@@ -51,39 +51,34 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
-    private void EquipElement(ElementList newElement)
+    private void EquipElement(Element newElement)
     {
         if (currentAttack != null) currentAttack.OnUnequipped();
 
         currentElement = newElement;
         currentAttack = newElement switch {
-            ElementList.Fire => (IElementAttack)fireAttack,
-            ElementList.Water => (IElementAttack)waterAttack,
-            ElementList.Lightning => (IElementAttack)lightningAttack,
+            Element.Fire => (IElementAttack)fireAttack,
+            Element.Water => (IElementAttack)waterAttack,
+            Element.Lightning => (IElementAttack)lightningAttack,
             _ => currentAttack
         };
 
         currentAttack?.OnEquipped();
-        UpdateElementDisplay();
+        UIManager.Instance.UpdateElement(currentElement);
     }
 
-    private ElementList GetLeft(ElementList current) =>
-        current == ElementList.Fire ? ElementList.Water :
-        current == ElementList.Water ? ElementList.Lightning :
-        ElementList.Fire;
+    private Element GetLeft(Element current) =>
+        current == Element.Fire ? Element.Water :
+        current == Element.Water ? Element.Lightning :
+        Element.Fire;
 
-    private ElementList GetRight(ElementList current) =>
-        current == ElementList.Fire ? ElementList.Lightning :
-        current == ElementList.Water ? ElementList.Fire :
-        ElementList.Water;
-
-    private void UpdateElementDisplay()
-    {
-        elementDisplay.text = "<color=yellow>Element:</color> " + currentElement.ToString();
-    }
+    private Element GetRight(Element current) =>
+        current == Element.Fire ? Element.Lightning :
+        current == Element.Water ? Element.Fire :
+        Element.Water;
 }
 
-public enum ElementList
+public enum Element
 {
     Fire,
     Water,

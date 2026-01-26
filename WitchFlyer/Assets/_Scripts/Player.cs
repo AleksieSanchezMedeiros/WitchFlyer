@@ -4,28 +4,67 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public int maxHealth = 5;
-    public int currentHealth;
+    public static Player Instance;
+
+    [SerializeField] private int maxHealth = 10;
+    [SerializeField] private int currentHealth;
+
+    [SerializeField] private int maxMana = 100;
+    [SerializeField] private int currentMana;
+
+    [Header("PowerUps")]
+    private Coroutine heartPowercoroutine;
+    private float heartPowerRemaining;
+    [SerializeField] private bool dontUseMana; // Heart of Power
+
+    private Coroutine stoneSkinCoroutine;
+    private float stoneSkinRemaining;
+    private int stoneSkinReduction;
+    [SerializeField] private bool stoneSkin; // Stone Skin
+
+    private Element songElement;
+    private int songBonus;
+    private float songRemaining;
+    private Coroutine songCoroutine;
+
+    private Coroutine wardStoneCoroutine;
+    private float wardStoneRemaining;
+    private int wardStoneDamage;
+    [SerializeField] private bool wardStone;
+
+
 
     [Header("Damage IFrame")]
     [SerializeField] private float invulnerableTime = 0.5f;
     private bool isInvulnerable;
 
-    [Header("UI")]
-    [SerializeField] private TMP_Text healthDisplay;
-
     private void Awake()
     {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+
+        Initialize();
+    }
+
+    private void Initialize()
+    {
         currentHealth = maxHealth;
-        UpdateHealth();
+        UIManager.Instance.UpdateHealth(currentHealth);
+
+        currentMana = maxMana;
+        UIManager.Instance.UpdateMana(currentMana);
     }
 
     private void TakeDamage(int damage)
     {
         if (isInvulnerable) return;
 
-        currentHealth -= damage;
-        UpdateHealth();
+        if (stoneSkin) {
+            currentHealth -= (Mathf.Max(0, damage - stoneSkinReduction));
+        }else {
+            currentHealth -= damage;
+        }
+        UIManager.Instance.UpdateHealth(currentHealth);
 
         if (currentHealth <= 0) Die();
         else StartCoroutine(InvulnerableCooldown());
@@ -44,24 +83,163 @@ public class Player : MonoBehaviour
         GameManager.Instance.GameOver();
     }
 
-    private void UpdateHealth()
+    #region RESOURCES
+    public void RegenHealth(int amount)
     {
-        healthDisplay.text = "<color=orange>Health: </color>" + currentHealth;
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+        UIManager.Instance.UpdateHealth(currentHealth);
     }
+
+    public void RegenMana(int amount)
+    {
+        currentMana = Mathf.Min(currentMana + amount, maxMana);
+        UIManager.Instance.UpdateMana(currentMana);
+    }
+
+    public bool UseMana(int manaCost)
+    {
+        if (manaCost > currentMana) return false;
+
+        if (!dontUseMana) {
+            currentMana -= manaCost;
+            UIManager.Instance.UpdateMana(currentMana);
+        }
+
+        return true;
+    }
+    #endregion
+
+    #region POWERUPS
+
+    // Heart of Power
+    public void HeartOfPower(float duration)
+    {
+        heartPowerRemaining += (heartPowerRemaining <= 0f) ? duration : duration / 2f;
+        if (heartPowercoroutine == null) heartPowercoroutine = StartCoroutine(HeartOfPowerRoutine());
+    }
+
+    private IEnumerator HeartOfPowerRoutine()
+    {
+        dontUseMana = true;
+
+        while (heartPowerRemaining > 0f) {
+            heartPowerRemaining -= Time.deltaTime;
+            yield return null;
+        }
+
+        dontUseMana = false;
+        heartPowercoroutine = null;
+    }
+
+    // Stone Skin
+    public void StoneSkin(float duration, int reductionValue)
+    {
+        UpdateStoneSkinDamageReduction(reductionValue);
+
+        stoneSkinRemaining += (stoneSkinRemaining <= 0f) ? duration : duration / 2f;
+        if (stoneSkinCoroutine == null) stoneSkinCoroutine = StartCoroutine(StoneSkinCoroutine());
+    }
+
+    private IEnumerator StoneSkinCoroutine()
+    {
+        stoneSkin = true;
+
+        while (stoneSkinRemaining > 0f) {
+            stoneSkinRemaining -= Time.deltaTime;
+            yield return null;
+        }
+
+        stoneSkin = false;
+        stoneSkinCoroutine = null;
+    }
+
+    // Use the higher value of the current and new values
+    // Kinda goofy logistically
+    private void UpdateStoneSkinDamageReduction(int value) => stoneSkinReduction = Mathf.Max(stoneSkinReduction, value);
+
+
+    // Songs of Element
+    public void ActivateSong(Element element, int bonusDamage, float duration)
+    {
+        if (songCoroutine != null && songElement == element) songRemaining += duration / 2f;
+        else songRemaining = duration;
+
+        songElement = element;
+        songBonus = bonusDamage;
+
+        songRemaining = duration;
+
+        if (songCoroutine == null) songCoroutine = StartCoroutine(SongCoroutine());
+    }
+
+    private IEnumerator SongCoroutine()
+    {
+        while (songRemaining > 0f) {
+            songRemaining -= Time.deltaTime;
+            yield return null;
+        }
+        songBonus = 0;
+        songCoroutine = null;
+    }
+
+    public int GetSongBonus(Element element)
+    {
+        return (songRemaining > 0f && element == songElement) ? songBonus : 0;
+    }
+
+    // Ward Stone
+    public void WardStone(float duration, int damageValue)
+    {
+        UpdateWardStoneDamageReduction(damageValue);
+
+        wardStoneRemaining += (wardStoneRemaining <= 0f) ? duration : duration / 2f;
+        if (wardStoneCoroutine == null) wardStoneCoroutine = StartCoroutine(WardStoneCoroutine());
+    }
+
+    private IEnumerator WardStoneCoroutine()
+    {
+        wardStone = true;
+
+        while (wardStoneRemaining > 0f) {
+            wardStoneRemaining -= Time.deltaTime;
+            yield return null;
+        }
+
+        wardStone = false;
+        wardStoneCoroutine = null;
+    }
+
+    private void UpdateWardStoneDamageReduction(int value) => wardStoneDamage = value;
+
+
+    // Grand Heart
+    public void GrandHeart(int maxGain, int healAmount, int healthCap, int cappedHeal)
+    {
+        if (maxHealth >= healthCap) {
+            RegenHealth(cappedHeal);
+        }else {
+            maxHealth = Mathf.Min(maxHealth + maxGain, healthCap);
+            RegenHealth(healAmount);
+        }
+    }
+
+    #endregion
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy")) {
-            int damage = collision.gameObject.GetComponent<Enemy>().dmg;
-            TakeDamage(damage);
+            Enemy enemy = collision.GetComponentInParent<Enemy>();
+            TakeDamage(enemy.dmg);
+
+            if (wardStone) enemy.TakeDamage(wardStoneDamage);
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Enemy") {
-            int damage = collision.gameObject.GetComponent<Enemy>().dmg;
-            TakeDamage(damage);
-        }
-    }
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.tag == "Enemy") {
+    //        int damage = collision.gameObject.GetComponent<Enemy>().dmg;
+    //        TakeDamage(damage);
+    //    }
+    //}
 }

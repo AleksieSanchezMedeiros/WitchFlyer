@@ -10,6 +10,7 @@ TagManager:
   - Audio Toggles
   - Ground
   - KillWall
+  - PowerUp
   layers:
   - Default
   - TransparentFX
