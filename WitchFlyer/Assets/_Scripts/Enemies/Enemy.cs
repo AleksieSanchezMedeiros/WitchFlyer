@@ -3,9 +3,13 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour
 {
     //all enemies have HP, dmg, type
-    public int HP;
-    public int dmg;
+    public int health;
+    public int damage;
     public string type;
+
+    [Header("Fire Tick Gate")]
+    [SerializeField] private float fireTickInterval = 0.2f;
+    private float nextFireDamageTime;
 
     void Update()
     {
@@ -13,18 +17,22 @@ public abstract class Enemy : MonoBehaviour
         Attack();
     }
 
-    public void CheckHealth()
+    public virtual void CheckHealth()
     {
-        if (HP <= 0)
-        {
-            Destroy(gameObject);
-        }
+        if (health <= 0) Destroy(gameObject);
     }
 
     public void TakeDamage(int damage)
     {
-        HP -= damage;
-        if (HP <= 0) CheckHealth();
+        health -= damage;
+        if (health <= 0) CheckHealth();
+    }
+
+    public void TryTakeFireDamage(int baseDamage)
+    {
+        if (Time.time < nextFireDamageTime) return;
+        nextFireDamageTime = Time.time + fireTickInterval;
+        TakeDamage(baseDamage);
     }
 
     //make move and attack be methods that classes that derive from this one have to implement

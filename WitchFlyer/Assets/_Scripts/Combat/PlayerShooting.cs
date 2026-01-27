@@ -21,7 +21,16 @@ public class PlayerShooting : MonoBehaviour
     private void Awake()
     {
         currentElement = Element.Fire;
+    }
+
+    private void Start()
+    {
         EquipElement(currentElement); // equip fire element by default; REMOVE for prototype
+    }
+
+    private void OnDisable()
+    {
+        Debug.LogError($"DISABLED: {name} ({GetType().Name})\n{Environment.StackTrace}");
     }
 
     // Update is called once per frame

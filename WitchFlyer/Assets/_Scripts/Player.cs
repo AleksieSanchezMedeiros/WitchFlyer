@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -32,8 +33,6 @@ public class Player : MonoBehaviour
     private int wardStoneDamage;
     [SerializeField] private bool wardStone;
 
-
-
     [Header("Damage IFrame")]
     [SerializeField] private float invulnerableTime = 0.5f;
     private bool isInvulnerable;
@@ -42,8 +41,16 @@ public class Player : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+    }
 
+    private void Start()
+    {
         Initialize();
+    }
+
+    private void OnDisable()
+    {
+        Debug.LogError($"DISABLED: {name} ({GetType().Name})\n{Environment.StackTrace}");
     }
 
     private void Initialize()
@@ -229,7 +236,7 @@ public class Player : MonoBehaviour
     {
         if (collision.CompareTag("Enemy")) {
             Enemy enemy = collision.GetComponentInParent<Enemy>();
-            TakeDamage(enemy.dmg);
+            TakeDamage(enemy.damage);
 
             if (wardStone) enemy.TakeDamage(wardStoneDamage);
         }
