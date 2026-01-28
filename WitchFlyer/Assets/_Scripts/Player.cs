@@ -7,11 +7,19 @@ public class Player : MonoBehaviour
 {
     public static Player Instance;
 
+    [Header("Health")]
     [SerializeField] private int maxHealth = 10;
     [SerializeField] private int currentHealth;
 
+    [Header("Mana")]
     [SerializeField] private int maxMana = 100;
     [SerializeField] private int currentMana;
+    [Space(10)]
+    [SerializeField] private bool passiveManaRegenEnabled = true;
+    [SerializeField] private float passiveManaRegenDelay = 1f;
+    [SerializeField] private float passiveManaRegenRate = 0.5f;
+    [SerializeField] private int passiveManaRegenPerTick = 1;
+    private Coroutine passiveManaRegenCoroutine;
 
     [Header("PowerUps")]
     private Coroutine heartPowercoroutine;
@@ -43,14 +51,21 @@ public class Player : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        Initialize();
+        PlayerShooting.OnShootingStart += HandleShootingStart;
+        PlayerShooting.OnShootingStop += HandleShootingEnd;
     }
 
     private void OnDisable()
     {
-        Debug.LogError($"DISABLED: {name} ({GetType().Name})\n{Environment.StackTrace}");
+        PlayerShooting.OnShootingStart -= HandleShootingStart;
+        PlayerShooting.OnShootingStop -= HandleShootingEnd;
+    }
+
+    private void Start()
+    {
+        Initialize();
     }
 
     private void Initialize()
@@ -114,6 +129,38 @@ public class Player : MonoBehaviour
 
         return true;
     }
+
+    // Mana Regeneration
+    private void HandleShootingStart()
+    {
+        // Stop regeneration
+        if (passiveManaRegenCoroutine != null) {
+            StopCoroutine(passiveManaRegenCoroutine);
+            passiveManaRegenCoroutine = null;
+        }
+    }
+
+    private void HandleShootingEnd()
+    {
+        if (!passiveManaRegenEnabled) return;
+
+        if (passiveManaRegenCoroutine != null) StopCoroutine(passiveManaRegenCoroutine);
+        passiveManaRegenCoroutine = StartCoroutine(PassiveManaRegeneration());
+    }
+
+    private IEnumerator PassiveManaRegeneration()
+    {
+        yield return new WaitForSeconds(passiveManaRegenDelay);
+
+        while (currentMana < maxMana) {
+            RegenMana(passiveManaRegenPerTick);
+            yield return new WaitForSeconds(passiveManaRegenRate);
+        }
+
+        passiveManaRegenCoroutine = null;
+    }
+
+
     #endregion
 
     #region POWERUPS

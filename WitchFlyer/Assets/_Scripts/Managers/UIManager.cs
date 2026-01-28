@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateMana(int manaValue)
     {
-        manaDisplay.text = "<color=cyan>Mana: </color>" + manaValue;
+        manaDisplay.text = "<color=blue>Mana: </color>" + manaValue;
     }
 
     public void UpdateElement(Element element)

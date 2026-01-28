@@ -18,6 +18,11 @@ public class PlayerShooting : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_Text elementDisplay;
 
+    public static event Action OnShootingStart;
+    public static event Action OnShootingStop;
+
+    private bool wasShooting;
+
     private void Awake()
     {
         currentElement = Element.Fire;
@@ -28,23 +33,11 @@ public class PlayerShooting : MonoBehaviour
         EquipElement(currentElement); // equip fire element by default; REMOVE for prototype
     }
 
-    private void OnDisable()
-    {
-        Debug.LogError($"DISABLED: {name} ({GetType().Name})\n{Environment.StackTrace}");
-    }
-
     // Update is called once per frame
     void Update()
     {
         HandleElementSwitch();
-
-        bool held = InputManager.shootHeld;
-        bool pressed = InputManager.shootPressed;
-        bool released = InputManager.shootReleased;
-
-        if (pressed) currentAttack?.OnPressed();
-        if (held) currentAttack?.OnHeld(Time.deltaTime);
-        if (released) currentAttack?.OnReleased();
+        HandleInputs();
     }
 
     private void HandleElementSwitch()
@@ -58,6 +51,24 @@ public class PlayerShooting : MonoBehaviour
             currentElement = GetRight(currentElement);
             EquipElement(currentElement);
         }
+    }
+
+    private void HandleInputs()
+    {
+        bool held = InputManager.shootHeld;
+        bool pressed = InputManager.shootPressed;
+        bool released = InputManager.shootReleased;
+
+        bool isShooting = held || pressed;
+
+        if (!wasShooting && isShooting) OnShootingStart?.Invoke();
+        if (wasShooting && !isShooting) OnShootingStop?.Invoke();
+
+        wasShooting = isShooting;
+
+        if (pressed) currentAttack?.OnPressed();
+        if (held) currentAttack?.OnHeld(Time.deltaTime);
+        if (released) currentAttack?.OnReleased();
     }
 
     private void EquipElement(Element newElement)

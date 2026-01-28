@@ -1155,17 +1155,45 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1191590186}
     - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
+      propertyPath: fireRate
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
+      propertyPath: manaCost
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
+      propertyPath: maxReach
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
+      propertyPath: spawnPoint
+      value: 
+      objectReference: {fileID: 1191590186}
+    - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
       propertyPath: flameHitbox
       value: 
-      objectReference: {fileID: 485075831}
+      objectReference: {fileID: 0}
+    - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
+      propertyPath: flamePrefab
+      value: 
+      objectReference: {fileID: 1352140458034849785, guid: 40eb57eb06dc7934c9c2731789cf03c2, type: 3}
     - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
       propertyPath: flameVisual
       value: 
-      objectReference: {fileID: 485075829}
+      objectReference: {fileID: 0}
+    - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
+      propertyPath: fireProjectile
+      value: 
+      objectReference: {fileID: 6709310514657521510, guid: 40eb57eb06dc7934c9c2731789cf03c2, type: 3}
+    - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
+      propertyPath: flameConeDegree
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8053634860494852247, guid: a53685e94de985e4e914adfeae328661, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1178,13 +1206,23 @@ PrefabInstance:
       propertyPath: healthDisplay
       value: 
       objectReference: {fileID: 2072517153}
+    - target: {fileID: 8367317199804794945, guid: a53685e94de985e4e914adfeae328661, type: 3}
+      propertyPath: passiveRegenPerTick
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8367317199804794945, guid: a53685e94de985e4e914adfeae328661, type: 3}
+      propertyPath: passiveManaRegenDelay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8367317199804794945, guid: a53685e94de985e4e914adfeae328661, type: 3}
+      propertyPath: passiveManaRegenPerTick
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5675194420804634872, guid: a53685e94de985e4e914adfeae328661, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5675194420804634872, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 485075831}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a53685e94de985e4e914adfeae328661, type: 3}
 --- !u!58 &279893456 stripped
 CircleCollider2D:
@@ -1489,62 +1527,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3288757480931450152, guid: 14056e7fef2e02b409164c6b51f49704, type: 3}
   m_PrefabInstance: {fileID: 419937620}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &485075828 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5675194420804634872, guid: a53685e94de985e4e914adfeae328661, type: 3}
-  m_PrefabInstance: {fileID: 279893455}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &485075829 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5991361059556375539, guid: a53685e94de985e4e914adfeae328661, type: 3}
-  m_PrefabInstance: {fileID: 279893455}
-  m_PrefabAsset: {fileID: 0}
---- !u!61 &485075831
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 485075828}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.21133333}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.28866667}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!1 &515207367 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1240289095443539499, guid: 775ace42b85e9fc419ad6a09545b36d2, type: 3}
@@ -4072,6 +4054,14 @@ PrefabInstance:
     - target: {fileID: 7572777685548188578, guid: 2ee27066bc428744abcc543643eea216, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7718344206092258808, guid: 2ee27066bc428744abcc543643eea216, type: 3}
+      propertyPath: health
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7718344206092258808, guid: 2ee27066bc428744abcc543643eea216, type: 3}
+      propertyPath: fireTickInterval
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
