@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LightningAttack : MonoBehaviour, IElementAttack
 {
     [SerializeField] private Transform origin;
+    [SerializeField] private LightningProjectile lightningPrefab;
     [SerializeField] private float minCharge = 0.1f;
     [SerializeField] private float maxCharge = 2f;
 
@@ -48,6 +50,14 @@ public class LightningAttack : MonoBehaviour, IElementAttack
     {
         // CHAIN ATTACK
         Debug.Log("CHAIN LIGHTNING ZAPPY ZAP!");
+        if (lightningPrefab == null || origin == null) return;
+
+        int remainingHits = chainLength;
+        Vector2 direction = origin.right;
+
+        HashSet<int> hitEnemies = new HashSet<int>();
+        LightningProjectile projectile = Instantiate(lightningPrefab, origin.position, Quaternion.identity);
+        
     }
 
     public void OnEquipped() { }
