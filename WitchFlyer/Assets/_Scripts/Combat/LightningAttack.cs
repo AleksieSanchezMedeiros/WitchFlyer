@@ -7,12 +7,15 @@ public class LightningAttack : MonoBehaviour, IElementAttack
     [SerializeField] private LightningProjectile lightningPrefab;
     [SerializeField] private float minCharge = 0.1f;
     [SerializeField] private float maxCharge = 2f;
+    [SerializeField] private float currentCharge;
 
     [Header("Scaling")]
     [SerializeField] private int baseDamage = 1;
     [SerializeField] private int maxBonusDamage = 2;
     [SerializeField] private int baseChain = 2;
     [SerializeField] private int maxBonusChain = 5;
+
+    
 
     private float chargeTime;
     private bool charging;
@@ -41,23 +44,24 @@ public class LightningAttack : MonoBehaviour, IElementAttack
 
         float t = Mathf.InverseLerp(minCharge, maxCharge, chargeTime);
         int damage = baseDamage + Mathf.RoundToInt(maxBonusDamage * t);
-        int chain = baseChain + Mathf.RoundToInt(maxBonusChain * t);
+        int chainLength = baseChain + Mathf.RoundToInt(maxBonusChain * t);
+        Debug.Log("DAMAGE = " + damage + " || CHAIN LENGTH = " + chainLength);
 
-        ReleaseLightning(damage, chain);
+        ReleaseLightning(damage, chainLength);
+    }
+
+    private void Update()
+    {
+        currentCharge = chargeTime;
     }
 
     private void ReleaseLightning(int damage, int chainLength)
     {
-        // CHAIN ATTACK
-        Debug.Log("CHAIN LIGHTNING ZAPPY ZAP!");
         if (lightningPrefab == null || origin == null) return;
 
-        int remainingHits = chainLength;
-        Vector2 direction = origin.right;
-
-        HashSet<int> hitEnemies = new HashSet<int>();
+        HashSet<int> hitIds = new HashSet<int>();
         LightningProjectile projectile = Instantiate(lightningPrefab, origin.position, Quaternion.identity);
-        
+        projectile.Initialize(origin.right, damage, chainLength, hitIds);
     }
 
     public void OnEquipped() { }

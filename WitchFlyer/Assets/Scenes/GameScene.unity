@@ -1070,165 +1070,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2757673010270120995, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2757673010270120995, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: motePower
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 2757673010270120995, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: healingSalve
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2757673010270120995, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: songFireBonus
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2757673010270120995, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: grandHeartHeal
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2757673010270120995, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: playerCollider
-      value: 
-      objectReference: {fileID: 279893456}
-    - target: {fileID: 2757673010270120995, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: songWaterBonus
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2757673010270120995, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: wardStoneDamage
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2757673010270120995, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: grandHeartCapHeal
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2757673010270120995, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: grandHeartMaxGain
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2757673010270120995, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: stoneSkinDuration
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2757673010270120995, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: wardStoneDuration
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2757673010270120995, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: heartPowerDuration
-      value: 66
-      objectReference: {fileID: 0}
-    - target: {fileID: 2757673010270120995, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: songLightningBonus
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2757673010270120995, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: stoneSkinReduction
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2757673010270120995, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: grandHeartHealthCap
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 2981445217640624582, guid: a53685e94de985e4e914adfeae328661, type: 3}
       propertyPath: elementDisplay
       value: 
       objectReference: {fileID: 684530553}
-    - target: {fileID: 3039740470358738934, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3167516517275270165, guid: a53685e94de985e4e914adfeae328661, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 6422841491013006094, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: origin
-      value: 
-      objectReference: {fileID: 1191590186}
-    - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: fireRate
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: manaCost
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: maxReach
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: spawnPoint
-      value: 
-      objectReference: {fileID: 1191590186}
-    - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: flameHitbox
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: flamePrefab
-      value: 
-      objectReference: {fileID: 1352140458034849785, guid: 40eb57eb06dc7934c9c2731789cf03c2, type: 3}
-    - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: flameVisual
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: fireProjectile
-      value: 
-      objectReference: {fileID: 6709310514657521510, guid: 40eb57eb06dc7934c9c2731789cf03c2, type: 3}
-    - target: {fileID: 6939797672589576059, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: flameConeDegree
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8053634860494852247, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8108664452454739768, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8367317199804794945, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: healthDisplay
-      value: 
-      objectReference: {fileID: 2072517153}
-    - target: {fileID: 8367317199804794945, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: passiveRegenPerTick
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8367317199804794945, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: passiveManaRegenDelay
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8367317199804794945, guid: a53685e94de985e4e914adfeae328661, type: 3}
-      propertyPath: passiveManaRegenPerTick
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 5675194420804634872, guid: a53685e94de985e4e914adfeae328661, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a53685e94de985e4e914adfeae328661, type: 3}
---- !u!58 &279893456 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 1118942378516468064, guid: a53685e94de985e4e914adfeae328661, type: 3}
-  m_PrefabInstance: {fileID: 279893455}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &330072949
 GameObject:
   m_ObjectHideFlags: 0
@@ -1541,11 +1395,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7572777685548188578, guid: 2ee27066bc428744abcc543643eea216, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.1
+      value: -0.95
       objectReference: {fileID: 0}
     - target: {fileID: 7572777685548188578, guid: 2ee27066bc428744abcc543643eea216, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.1
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 7572777685548188578, guid: 2ee27066bc428744abcc543643eea216, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2337,11 +2191,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7572777685548188578, guid: 2ee27066bc428744abcc543643eea216, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.37
+      value: 0.64
       objectReference: {fileID: 0}
     - target: {fileID: 7572777685548188578, guid: 2ee27066bc428744abcc543643eea216, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.01
+      value: 1.51
       objectReference: {fileID: 0}
     - target: {fileID: 7572777685548188578, guid: 2ee27066bc428744abcc543643eea216, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2719,11 +2573,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1168691111}
   m_CullTransparentMesh: 1
---- !u!4 &1191590186 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4787368371479580274, guid: a53685e94de985e4e914adfeae328661, type: 3}
-  m_PrefabInstance: {fileID: 279893455}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1203424090
 GameObject:
   m_ObjectHideFlags: 0
@@ -4224,11 +4073,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7572777685548188578, guid: 2ee27066bc428744abcc543643eea216, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.41
+      value: 2.45
       objectReference: {fileID: 0}
     - target: {fileID: 7572777685548188578, guid: 2ee27066bc428744abcc543643eea216, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.04
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7572777685548188578, guid: 2ee27066bc428744abcc543643eea216, type: 3}
       propertyPath: m_LocalPosition.z

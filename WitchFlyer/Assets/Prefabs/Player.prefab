@@ -29,8 +29,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.693, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5991361059556375539}
+  m_Children: []
   m_Father: {fileID: 1058027142438556464}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &483678661557070542
@@ -269,6 +268,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   maxHealth: 5
   currentHealth: 0
+  maxMana: 100
+  currentMana: 0
+  passiveManaRegenEnabled: 1
+  passiveManaRegenDelay: 1
+  passiveManaRegenRate: 0.5
+  passiveManaRegenPerTick: 2
+  dontUseMana: 0
+  stoneSkin: 0
+  wardStone: 0
   invulnerableTime: 0.5
 --- !u!114 &8053634860494852247
 MonoBehaviour:
@@ -296,7 +304,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3ae355dff757e646919f1807fbd5559, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  playerCollider: {fileID: 0}
+  playerCollider: {fileID: 1118942378516468064}
+  healingSalve: 2
+  motePower: 40
+  heartPowerDuration: 66
+  stoneSkinDuration: 6
+  stoneSkinReduction: 1
+  songFireBonus: 1
+  songWaterBonus: 1
+  songLightningBonus: 1
+  songDuration: 0
+  wardStoneDuration: 6
+  wardStoneDamage: 1
+  grandHeartMaxGain: 1
+  grandHeartHeal: 2
+  grandHeartHealthCap: 12
+  grandHeartCapHeal: 4
 --- !u!114 &2981445217640624582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,6 +336,7 @@ MonoBehaviour:
   waterAttack: {fileID: 3039740470358738934}
   lightningAttack: {fileID: 6422841491013006094}
   currentElement: 0
+  elementDisplay: {fileID: 0}
 --- !u!114 &6939797672589576059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,8 +349,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 908d6dbf29cfa2a4fbba5e57eeea2425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FireAttack
-  flamePrefab: {fileID: 5675194420804634872}
-  tickInterval: 0.1
+  spawnPoint: {fileID: 4787368371479580274}
+  flamePrefab: {fileID: 1352140458034849785, guid: 40eb57eb06dc7934c9c2731789cf03c2, type: 3}
+  maxReach: 15
+  extendSpeed: 2
+  fireRate: 0.1
+  manaCost: 3
+  stopWhenOutOfMana: 1
 --- !u!114 &3039740470358738934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,6 +371,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 4787368371479580274}
   hailPrefab: {fileID: 5199719278207587673, guid: d8cd28adac433be4e8cd5d6ce252923f, type: 3}
   fireRate: 0.25
+  manaCost: 0
 --- !u!114 &6422841491013006094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,12 +385,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightningAttack
   origin: {fileID: 4787368371479580274}
+  lightningPrefab: {fileID: 1861807993232241149, guid: 1706bc566bfe4134bb6eca1cdb3e8051, type: 3}
   minCharge: 0.1
   maxCharge: 2
+  currentCharge: 0
   baseDamage: 1
-  maxBonusDamage: 2
-  baseChain: 2
-  maxBonusChain: 5
+  maxBonusDamage: 1
+  baseChain: 1
+  maxBonusChain: 3
 --- !u!114 &8108664452454739768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,82 +407,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FollowMouse
   spawnPostion: {fileID: 4787368371479580274}
   distanceFromPlayer: 1
---- !u!1001 &4421698804721483784
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4787368371479580274}
-    m_Modifications:
-    - target: {fileID: 7960271226793278459, guid: 200065a3487bf7d4d84d6510cc470f43, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 7960271226793278459, guid: 200065a3487bf7d4d84d6510cc470f43, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 7960271226793278459, guid: 200065a3487bf7d4d84d6510cc470f43, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 5.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7960271226793278459, guid: 200065a3487bf7d4d84d6510cc470f43, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7960271226793278459, guid: 200065a3487bf7d4d84d6510cc470f43, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7960271226793278459, guid: 200065a3487bf7d4d84d6510cc470f43, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071071
-      objectReference: {fileID: 0}
-    - target: {fileID: 7960271226793278459, guid: 200065a3487bf7d4d84d6510cc470f43, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7960271226793278459, guid: 200065a3487bf7d4d84d6510cc470f43, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7960271226793278459, guid: 200065a3487bf7d4d84d6510cc470f43, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.7071065
-      objectReference: {fileID: 0}
-    - target: {fileID: 7960271226793278459, guid: 200065a3487bf7d4d84d6510cc470f43, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7960271226793278459, guid: 200065a3487bf7d4d84d6510cc470f43, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7960271226793278459, guid: 200065a3487bf7d4d84d6510cc470f43, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 8331466773230995696, guid: 200065a3487bf7d4d84d6510cc470f43, type: 3}
-      propertyPath: m_Name
-      value: Flame
-      objectReference: {fileID: 0}
-    - target: {fileID: 8331466773230995696, guid: 200065a3487bf7d4d84d6510cc470f43, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 200065a3487bf7d4d84d6510cc470f43, type: 3}
---- !u!1 &5675194420804634872 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8331466773230995696, guid: 200065a3487bf7d4d84d6510cc470f43, type: 3}
-  m_PrefabInstance: {fileID: 4421698804721483784}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &5991361059556375539 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7960271226793278459, guid: 200065a3487bf7d4d84d6510cc470f43, type: 3}
-  m_PrefabInstance: {fileID: 4421698804721483784}
-  m_PrefabAsset: {fileID: 0}
