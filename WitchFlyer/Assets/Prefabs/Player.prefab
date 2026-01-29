@@ -353,8 +353,9 @@ MonoBehaviour:
   flamePrefab: {fileID: 1352140458034849785, guid: 40eb57eb06dc7934c9c2731789cf03c2, type: 3}
   maxReach: 15
   extendSpeed: 2
-  fireRate: 0.1
-  manaCost: 3
+  fireRate: 0.075
+  manaCost: 1
+  manaDrainRate: 0.25
   stopWhenOutOfMana: 1
 --- !u!114 &3039740470358738934
 MonoBehaviour:
@@ -371,7 +372,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 4787368371479580274}
   hailPrefab: {fileID: 5199719278207587673, guid: d8cd28adac433be4e8cd5d6ce252923f, type: 3}
   fireRate: 0.25
-  manaCost: 0
+  manaCost: 3
 --- !u!114 &6422841491013006094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,6 +394,8 @@ MonoBehaviour:
   maxBonusDamage: 1
   baseChain: 1
   maxBonusChain: 3
+  baseManaCost: 4
+  maxBonusManaCost: 4
 --- !u!114 &8108664452454739768
 MonoBehaviour:
   m_ObjectHideFlags: 0

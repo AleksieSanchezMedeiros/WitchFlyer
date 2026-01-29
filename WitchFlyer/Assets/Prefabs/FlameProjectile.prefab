@@ -144,7 +144,7 @@ MonoBehaviour:
   drag: 3
   lifetime: 1.2
   maxTravelDistance: 8
-  flameConeDegree: 5
+  flameConeDegree: 4
   baseDamage: 1
   fadeOut: 1
   fadeLastPercent: 0.4

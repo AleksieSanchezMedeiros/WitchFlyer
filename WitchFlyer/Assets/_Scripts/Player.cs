@@ -71,9 +71,11 @@ public class Player : MonoBehaviour
     private void Initialize()
     {
         currentHealth = maxHealth;
+        UIManager.Instance.SetMaxHealth(maxHealth);
         UIManager.Instance.UpdateHealth(currentHealth);
 
         currentMana = maxMana;
+        UIManager.Instance.SetMaxMana(maxMana);
         UIManager.Instance.UpdateMana(currentMana);
     }
 
@@ -133,6 +135,7 @@ public class Player : MonoBehaviour
     // Mana Regeneration
     private void HandleShootingStart()
     {
+        Debug.Log("STOP MANA REGENERATION!");
         // Stop regeneration
         if (passiveManaRegenCoroutine != null) {
             StopCoroutine(passiveManaRegenCoroutine);
@@ -142,6 +145,7 @@ public class Player : MonoBehaviour
 
     private void HandleShootingEnd()
     {
+        Debug.Log("CAN START MANA REGENRATION");
         if (!passiveManaRegenEnabled) return;
 
         if (passiveManaRegenCoroutine != null) StopCoroutine(passiveManaRegenCoroutine);

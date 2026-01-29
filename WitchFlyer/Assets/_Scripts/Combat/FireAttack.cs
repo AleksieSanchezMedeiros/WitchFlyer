@@ -14,6 +14,7 @@ public class FireAttack : MonoBehaviour, IElementAttack
     [SerializeField] private float fireRate = 0.1f;
 
     [SerializeField] private int manaCost;
+    [SerializeField] private float manaDrainRate;
     [SerializeField] private bool stopWhenOutOfMana = true;
 
     private bool firing;
@@ -35,11 +36,11 @@ public class FireAttack : MonoBehaviour, IElementAttack
 
         currentReach = Mathf.Min(maxReach, currentReach + extendSpeed * dt);
 
-        if (manaCost > 0) {
+        if (manaCost > 0 && manaDrainRate > 0f) {
             manaTimer += dt;
 
-            while (manaTimer > 1f) {
-                manaTimer -= 1f;
+            while (manaTimer >= manaDrainRate) {
+                manaTimer -= manaDrainRate;
 
                 bool enoughMana = Player.Instance.UseMana(manaCost);
                 if (!enoughMana) {

@@ -14,9 +14,9 @@ public class LightningAttack : MonoBehaviour, IElementAttack
     [SerializeField] private int maxBonusDamage = 2;
     [SerializeField] private int baseChain = 2;
     [SerializeField] private int maxBonusChain = 5;
-
+    [SerializeField] private int baseManaCost = 4;
+    [SerializeField] private int maxBonusManaCost = 4;
     
-
     private float chargeTime;
     private bool charging;
 
@@ -38,15 +38,17 @@ public class LightningAttack : MonoBehaviour, IElementAttack
     {
         Debug.Log("LIGHTNING RELEASE");
         if (!charging) return;
-        charging = false;
-
-        if (chargeTime < minCharge) return;
+        if (chargeTime < minCharge) return; // Can't just tap to fire
 
         float t = Mathf.InverseLerp(minCharge, maxCharge, chargeTime);
         int damage = baseDamage + Mathf.RoundToInt(maxBonusDamage * t);
         int chainLength = baseChain + Mathf.RoundToInt(maxBonusChain * t);
-        Debug.Log("DAMAGE = " + damage + " || CHAIN LENGTH = " + chainLength);
+        int manaCost = baseManaCost + Mathf.RoundToInt(maxBonusManaCost * t);
 
+        bool enoughMana = Player.Instance.UseMana(manaCost);
+        if (!enoughMana) return;
+
+        charging = false;
         ReleaseLightning(damage, chainLength);
     }
 
