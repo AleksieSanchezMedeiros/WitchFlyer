@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 1053717733985730537}
   - component: {fileID: 357359851100694630}
   m_Layer: 0
-  m_Name: LevelSegment 2
+  m_Name: LevelSegment 16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -224,11 +224,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2071962926259402151, guid: 485c8c057160b9e47b2ea01fae46a46a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.071371
+      value: 9.9
       objectReference: {fileID: 0}
     - target: {fileID: 2071962926259402151, guid: 485c8c057160b9e47b2ea01fae46a46a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.61
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2071962926259402151, guid: 485c8c057160b9e47b2ea01fae46a46a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -266,6 +266,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RusherBat
       objectReference: {fileID: 0}
+    - target: {fileID: 8249483249197448159, guid: 485c8c057160b9e47b2ea01fae46a46a, type: 3}
+      propertyPath: type
+      value: Ice
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -286,11 +290,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2071962926259402151, guid: 485c8c057160b9e47b2ea01fae46a46a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.07
+      value: 5.71
       objectReference: {fileID: 0}
     - target: {fileID: 2071962926259402151, guid: 485c8c057160b9e47b2ea01fae46a46a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.61
+      value: 3.36
       objectReference: {fileID: 0}
     - target: {fileID: 2071962926259402151, guid: 485c8c057160b9e47b2ea01fae46a46a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -327,6 +331,10 @@ PrefabInstance:
     - target: {fileID: 5511328720408685484, guid: 485c8c057160b9e47b2ea01fae46a46a, type: 3}
       propertyPath: m_Name
       value: RusherBat (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8249483249197448159, guid: 485c8c057160b9e47b2ea01fae46a46a, type: 3}
+      propertyPath: type
+      value: Ice
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 1053717733985730537}
   - component: {fileID: 357359851100694630}
   m_Layer: 0
-  m_Name: LevelSegment 2
+  m_Name: LevelSegment 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -228,7 +228,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2071962926259402151, guid: 485c8c057160b9e47b2ea01fae46a46a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.61
+      value: -2.23
       objectReference: {fileID: 0}
     - target: {fileID: 2071962926259402151, guid: 485c8c057160b9e47b2ea01fae46a46a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -290,7 +290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2071962926259402151, guid: 485c8c057160b9e47b2ea01fae46a46a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.61
+      value: -2.23
       objectReference: {fileID: 0}
     - target: {fileID: 2071962926259402151, guid: 485c8c057160b9e47b2ea01fae46a46a, type: 3}
       propertyPath: m_LocalPosition.z
