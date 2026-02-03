@@ -3,8 +3,11 @@ using UnityEngine;
 
 public class PowerUps : MonoBehaviour
 {
+    // Queue<PowerUp> storedPowerUps = new Queue<PowerUp>();
+    // We don't want multiple powers stored at a time
     [SerializeField] private CircleCollider2D playerCollider;
-    Queue<PowerUpsList> storedPowerUps = new Queue<PowerUpsList>();
+    [SerializeField] private PowerUp storedPowerUp;
+    [SerializeField] private bool hasStoredPowerUp;
 
     [Header("PowerUp Stats")]
     [SerializeField] private int healingSalve;
@@ -24,6 +27,17 @@ public class PowerUps : MonoBehaviour
     [SerializeField] private int grandHeartHealthCap; // What is the health cap
     [SerializeField] private int grandHeartCapHeal; // How much it heals if player is at the health cap
 
+    [Header("PowerUp Icons")]
+    [SerializeField] private Sprite healingSalveIcon;
+    [SerializeField] private Sprite motePowerIcon;
+    [SerializeField] private Sprite heartPowerIcon;
+    [SerializeField] private Sprite stoneSkinIcon;
+    [SerializeField] private Sprite songFireIcon;
+    [SerializeField] private Sprite songWaterIcon;
+    [SerializeField] private Sprite songLightningIcon;
+    [SerializeField] private Sprite wardStoneIcon;
+    [SerializeField] private Sprite grandHeartIcon;
+
     private void Start()
     {
         playerCollider = GetComponent<CircleCollider2D>();
@@ -31,7 +45,7 @@ public class PowerUps : MonoBehaviour
 
     void Update()
     {
-        if (InputManager.powerUpPressed && storedPowerUps.Count > 0)
+        if (InputManager.powerUpPressed && hasStoredPowerUp)
         {
             // storedPowerUps.Dequeue()
             UsePowerup();
@@ -43,47 +57,49 @@ public class PowerUps : MonoBehaviour
     {
         if (collision.CompareTag("PowerUp"))
         {
-            AddPower(collision.gameObject.GetComponentInParent<PowerUpDrop>().powerUp);
+            StorePowerUp(collision.gameObject.GetComponentInParent<PowerUpDrop>().powerUp);
             // collision.gameObject.SetActive(false);
             Destroy(collision.gameObject);
         }
     }
 
-    public void AddPower(PowerUpsList powerUp)
+    public void StorePowerUp(PowerUp powerUp)
     {
-        storedPowerUps.Enqueue(powerUp);
+        //storedPowerUps.Enqueue(powerUp);
+        storedPowerUp = powerUp;
+        UIManager.Instance.UpdatePowerUp(powerUp);
     }
 
     public void UsePowerup()
     {
-        PowerUpsList currentPowerUp = storedPowerUps.Dequeue();
-        switch (currentPowerUp)
+        //PowerUp currentPowerUp = storedPowerUps.Dequeue();
+        switch (storedPowerUp)
         {
-            case PowerUpsList.HealingSalve:
+            case PowerUp.HealingSalve:
                 HealingSalve();
                 break;
-            case PowerUpsList.MotePower:
+            case PowerUp.MoteOfPower:
                 MoteOfPower();
                 break;
-            case PowerUpsList.HeartPower:
+            case PowerUp.HeartOfPower:
                 HeartOfPower();
                 break;
-            case PowerUpsList.StoneSkin:
+            case PowerUp.StoneSkin:
                 StoneSkin();
                 break;
-            case PowerUpsList.SongFire:
+            case PowerUp.SongOfFire:
                 SongOfFire();
                 break;
-            case PowerUpsList.SongWater:
+            case PowerUp.SongOfWater:
                 SongOfWater();
                 break;
-            case PowerUpsList.SongLightning:
+            case PowerUp.SongOfLightning:
                 SongOfLightning();
                 break;
-            case PowerUpsList.WardStone:
+            case PowerUp.WardStone:
                 WardStone();
                 break;
-            case PowerUpsList.GrandHeart:
+            case PowerUp.GrandHeart:
                 GrandHeart();
                 break;
         }
@@ -142,15 +158,15 @@ public class PowerUps : MonoBehaviour
     }
 }
 
-public enum PowerUpsList
+public enum PowerUp
 {
     HealingSalve,
-    MotePower,
-    HeartPower,
+    MoteOfPower,
+    HeartOfPower,
     StoneSkin,
-    SongFire,
-    SongWater,
-    SongLightning,
+    SongOfFire,
+    SongOfWater,
+    SongOfLightning,
     WardStone,
     GrandHeart
 }

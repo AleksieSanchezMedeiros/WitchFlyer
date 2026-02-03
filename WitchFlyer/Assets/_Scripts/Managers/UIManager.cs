@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,6 +30,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private LayoutElement lightningIcon;
     [SerializeField] private Vector2 baseSize;
     [SerializeField] private Vector2 largeSize;
+
+    [Header("PowerUps")]
+    [SerializeField] private TMP_Text powerUpDisplay;
+    [SerializeField] private Image powerUpIcon;
 
     private void Awake()
     {
@@ -88,7 +93,7 @@ public class UIManager : MonoBehaviour
     public void SetMaxMana(int maxMana) => this.maxMana = maxMana;
     #endregion
 
-#region ELEMENT
+    #region ELEMENT
     public void UpdateElement(Element element)
     {
         SetPreferredSize(fireIcon, false);
@@ -121,7 +126,17 @@ public class UIManager : MonoBehaviour
             icon.preferredHeight = baseSize.y;
         }
     }
-#endregion
+    #endregion
+
+    #region POWERUPS
+    public void UpdatePowerUp(PowerUp powerUp)
+    {
+        // Interesting way to split strings by capital letters
+        string addedSpaces = Regex.Replace(powerUp.ToString(), "(?<!^)([A-Z])", " $1");
+        powerUpDisplay.text = addedSpaces;
+    }
+
+    #endregion
 
     private void GameOver(GameState oldState, GameState newState)
     {

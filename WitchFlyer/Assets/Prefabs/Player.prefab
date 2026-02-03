@@ -352,7 +352,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 4787368371479580274}
   flamePrefab: {fileID: 1352140458034849785, guid: 40eb57eb06dc7934c9c2731789cf03c2, type: 3}
   maxReach: 15
-  extendSpeed: 2
+  extendSpeed: 12
   fireRate: 0.075
   manaCost: 1
   manaDrainRate: 0.25

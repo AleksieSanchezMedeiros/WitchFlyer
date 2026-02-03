@@ -3,13 +3,6 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-public enum GameState
-{
-    None,
-    Playing,
-    Paused,
-    GameOver
-}
 
 public class GameManager : MonoBehaviour
 {
@@ -53,7 +46,11 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0f;
                 break;
             case GameState.GameOver:
-                Debug.Log("SWITCH GAME OVER!");
+                Debug.Log("GAME OVER!");
+                Time.timeScale = 0f;
+                break;
+            case GameState.GameComplete:
+                Debug.Log("GAME COMPLETE");
                 Time.timeScale = 0f;
                 break;
             default:
@@ -74,6 +71,11 @@ public class GameManager : MonoBehaviour
         SetState(GameState.GameOver);
     }
 
+    public void GameComplete()
+    {
+        SetState(GameState.GameComplete);
+    }
+
     public void Restart()
     {
         MySceneManager.Instance.RestartScene();
@@ -85,4 +87,13 @@ public class GameManager : MonoBehaviour
     }
 
     public bool IsPlaying => state == GameState.Playing; 
+}
+
+public enum GameState
+{
+    None,
+    Playing,
+    Paused,
+    GameOver,
+    GameComplete
 }

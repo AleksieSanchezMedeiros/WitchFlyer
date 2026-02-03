@@ -140,8 +140,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b020903e6fa61de459e7b53c851341d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlameProjectile
-  startSpeed: 5
-  drag: 3
+  startSpeed: 7
+  drag: 4
   lifetime: 1.2
   maxTravelDistance: 8
   flameConeDegree: 4

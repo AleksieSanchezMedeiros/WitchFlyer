@@ -11,6 +11,10 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] private float fireTickInterval = 0.2f;
     private float nextFireDamageTime;
 
+    [Header("Power Up Drop")]
+    [SerializeField][Range(0, 1)] private float dropRate;
+    [SerializeField] private GameObject powerUpPrefab;
+
     void Update()
     {
         Move();
@@ -19,7 +23,10 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void CheckHealth()
     {
-        if (health <= 0) Destroy(gameObject);
+        if (health <= 0) {
+            DropPowerUp();
+            Destroy(gameObject);
+        }
     }
 
     public void TakeDamage(int damage)
@@ -33,6 +40,14 @@ public abstract class Enemy : MonoBehaviour
         if (Time.time < nextFireDamageTime) return;
         nextFireDamageTime = Time.time + fireTickInterval;
         TakeDamage(baseDamage);
+    }
+
+    private void DropPowerUp()
+    {
+        float randomFloat = Random.Range(0, 1);
+        if (randomFloat < dropRate) {
+            Instantiate(powerUpPrefab, transform.position, Quaternion.identity);
+        }
     }
 
     //make move and attack be methods that classes that derive from this one have to implement
