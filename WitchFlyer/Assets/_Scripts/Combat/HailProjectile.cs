@@ -89,7 +89,7 @@ public class HailProjectile : MonoBehaviour
         Enemy enemy = target.GetComponentInParent<Enemy>();
         if (enemy != null) {
             int bonusDamage = Player.Instance.GetSongBonus(attackElement);
-            enemy.TakeDamage(directHitDamage + bonusDamage);
+            enemy.TakeDamage(directHitDamage + bonusDamage, EnemyElement.Water);
         }
     }
 

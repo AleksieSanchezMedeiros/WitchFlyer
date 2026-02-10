@@ -289,7 +289,7 @@ public class Player : MonoBehaviour
             Enemy enemy = collision.GetComponentInParent<Enemy>();
             TakeDamage(enemy.damage);
 
-            if (wardStone) enemy.TakeDamage(wardStoneDamage);
+            if (wardStone) enemy.TakeDamage(wardStoneDamage, EnemyElement.NonElemental);
         }
     }
 

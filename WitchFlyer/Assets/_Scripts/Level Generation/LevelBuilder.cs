@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class LevelBuilder : MonoBehaviour
@@ -42,12 +43,12 @@ public class LevelBuilder : MonoBehaviour
 
     private void OnEnable()
     {
-        
+        Boss.OnBossDeath += OnBossDefeated;
     }
 
     private void OnDisable()
     {
-        
+        Boss.OnBossDeath -= OnBossDefeated;    
     }
 
     //start with preset amount
@@ -64,15 +65,12 @@ public class LevelBuilder : MonoBehaviour
     {
         if (cameraTransform.position.x > nextSpawnX - despawnDistance * 0.5f) SpawnNextSegment();
         DespawnOldSegments();
-    }
 
-    private void BuildLevelPools()
-    {
-        levelPools.Clear();
-        foreach (LevelID id in Enum.GetValues(typeof(LevelID))) levelPools[id] = new List<LevelSegment>();
-        foreach (LevelSegment segment in allSegmentPrefabs) levelPools[segment.levelID].Add(segment);
+        if (Keyboard.current.yKey.wasPressedThisFrame) {
+            OnBossDefeated();
+        }
     }
-
+    #region LEVEL FLOW
     public void SetLevel(LevelID newLevel, bool immediate = false)
     {
         if (currentLevel == newLevel && !immediate) return;
@@ -89,7 +87,28 @@ public class LevelBuilder : MonoBehaviour
         LevelTransitionDestruction();
     }
 
-    void SpawnNextSegment()
+    private bool AdvanceToNextLevel()
+    {
+        int next = (int)currentLevel + 1;
+
+        if (next >= Enum.GetValues(typeof(LevelID)).Length) {
+            OnAllLevelsComplete();
+            return false;
+        }
+
+        SetLevel((LevelID)next);
+        return true;
+    }
+
+    private void OnAllLevelsComplete()
+    {
+        stopSpawning = true;
+        GameManager.Instance.GameComplete();
+    }
+    #endregion
+
+    #region SEGMENT GENERATION
+    private void SpawnNextSegment()
     {
         if (stopSpawning) return;
 
@@ -128,33 +147,7 @@ public class LevelBuilder : MonoBehaviour
         spawnedSegementCount++;
     }
 
-    private bool AdvanceToNextLevel()
-    {
-        int next = (int)currentLevel + 1;
-
-        if (next >= Enum.GetValues(typeof(LevelID)).Length) {
-            OnAllLevelsComplete();
-            return false;
-        }
-
-        SetLevel((LevelID)next);
-        return true;
-    }
-
-    private void OnAllLevelsComplete()
-    {
-        stopSpawning = true;
-        GameManager.Instance.GameComplete();
-    }
-
-    private int GetSegmentsPerLevel(LevelID level)
-    {
-        int i = (int)level;
-        if (segementsPerLevel == null || i < 0 || i >= segementsPerLevel.Count)
-            return 0;
-        return segementsPerLevel[i];
-    }
-
+    #region BOSS SEGEMENTS
     private void BeginBossFight()
     {
         if (bossFightActive) return;
@@ -168,17 +161,6 @@ public class LevelBuilder : MonoBehaviour
         bagIndex = 0;
 
         SpawnBossSegment();
-    }
-
-    public void OnBossDefeated()
-    {
-        if (!bossFightActive) return;
-
-        bossFightActive = false;
-        spawnMode = SpawnMode.Normal;
-
-        if (!AdvanceToNextLevel())
-            return;
     }
 
     private void SpawnBossSegment()
@@ -212,8 +194,35 @@ public class LevelBuilder : MonoBehaviour
         return bossSegementPrefabs[i];
     }
 
-    //used to get variation in every shuffle
-    //we go through everything in the list once before we reshuffle it all in
+    public void OnBossDefeated()
+    {
+        if (!bossFightActive) return;
+
+        bossFightActive = false;
+        spawnMode = SpawnMode.Normal;
+
+        if (!AdvanceToNextLevel())
+            return;
+    }
+    #endregion
+    #endregion
+
+    #region HELPER METHODS
+    private void BuildLevelPools()
+    {
+        levelPools.Clear();
+        foreach (LevelID id in Enum.GetValues(typeof(LevelID))) levelPools[id] = new List<LevelSegment>();
+        foreach (LevelSegment segment in allSegmentPrefabs) levelPools[segment.levelID].Add(segment);
+    }
+
+    private int GetSegmentsPerLevel(LevelID level)
+    {
+        int i = (int)level;
+        if (segementsPerLevel == null || i < 0 || i >= segementsPerLevel.Count)
+            return 0;
+        return segementsPerLevel[i];
+    }
+
     private void FillAndShuffleBag()
     {
         currentLevelSegments.Clear();
@@ -256,6 +265,7 @@ public class LevelBuilder : MonoBehaviour
             spawnedSegments.RemoveAt(0);
         }
     }
+    #endregion
 }
 
 public enum LevelID

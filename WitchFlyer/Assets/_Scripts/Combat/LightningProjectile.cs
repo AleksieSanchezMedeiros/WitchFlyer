@@ -67,7 +67,7 @@ public class LightningProjectile : MonoBehaviour
         hitIds.Add(id);
 
         int totalDamage = damage + Player.Instance.GetSongBonus(Element.Lightning);
-        enemy.TakeDamage(totalDamage);
+        enemy.TakeDamage(totalDamage, EnemyElement.Lightning);
 
         remainingHits--;
         if (remainingHits <= 0) {
